@@ -1,0 +1,37 @@
+function Sparkle(x,y,hu,fire) {
+    this.pos=createVector(x,y);
+    this.hu=hu;
+    this.lifespan=255;
+    if(fire){
+        this.velocity=p5.Vector.random2D();
+        this.velocity.mult(random(3,10));
+    }else{
+    this.velocity=createVector(0,random(-15,-8));
+    }
+    this.acceleration=createVector(0,0);
+    this.force=function(){
+         this.acceleration.add(gravity);
+    }
+    this.update=function(){
+        if(fire){
+            this.velocity.sub(this.acceleration);
+            this.velocity.mult(0.9);
+            this.lifespan-=4;
+        }
+         this.velocity.add(this.acceleration);
+         this.pos.add(this.velocity);
+         this.acceleration.mult(0);      
+    }
+    this.view=function(){
+         colorMode(HSB);
+        if(fire){
+            strokeWeight(2);
+            stroke(this.hu,255,255,this.lifespan);
+        }else{
+            strokeWeight(4);
+            stroke(this.hu,255,255);
+        }
+        point(this.pos.x,this.pos.y);
+        fill(255,255,this.hu,this.lifespan);   
+    } 
+}
